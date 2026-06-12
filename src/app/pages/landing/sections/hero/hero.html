@@ -1,0 +1,77 @@
+<section class="relative overflow-hidden">
+  <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+    <div
+      class="absolute top-[-12rem] left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-accent/20 blur-3xl"
+    ></div>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8 lg:py-32">
+    <div class="mx-auto max-w-3xl text-center">
+      <p
+        class="mb-4 inline-flex items-center rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted"
+      >
+        Now with AI-powered anomaly detection
+      </p>
+      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+        Turn raw data into
+        <span class="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent"
+          >decisions, instantly</span
+        >
+      </h1>
+      <p class="mt-6 text-lg text-muted">
+        Pulsegrid unifies your product, revenue, and customer data into one AI-powered dashboard, so
+        your team spends less time building reports and more time acting on them.
+      </p>
+      <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a
+          routerLink="/"
+          fragment="demo"
+          class="w-full rounded-lg bg-gradient-to-r from-accent to-accent-secondary px-6 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-accent/30 transition hover:opacity-90 sm:w-auto"
+        >
+          Request a Demo
+        </a>
+        <a
+          routerLink="/"
+          fragment="how-it-works"
+          class="w-full rounded-lg border border-border px-6 py-3 text-center text-sm font-semibold text-foreground transition hover:bg-surface sm:w-auto"
+        >
+          See how it works
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-16 sm:mt-20">
+      <div
+        class="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl"
+      >
+        <div class="flex items-center gap-2 border-b border-border px-4 py-3">
+          <span class="h-3 w-3 rounded-full bg-red-400/70"></span>
+          <span class="h-3 w-3 rounded-full bg-yellow-400/70"></span>
+          <span class="h-3 w-3 rounded-full bg-green-400/70"></span>
+          <span class="ml-2 truncate text-xs text-muted">app.pulsegrid.io/dashboard</span>
+        </div>
+
+        <div class="grid gap-4 p-4 sm:grid-cols-3 sm:p-6">
+          @for (stat of stats; track stat.label) {
+            <div class="rounded-xl border border-border bg-background p-4">
+              <p class="text-xs text-muted">{{ stat.label }}</p>
+              <p class="mt-2 text-2xl font-bold">{{ stat.value }}</p>
+              <p class="mt-1 text-xs text-emerald-400">{{ stat.delta }}</p>
+            </div>
+          }
+        </div>
+
+        <div class="border-t border-border p-4 sm:p-6">
+          <div class="flex h-32 items-end gap-2 sm:h-36 sm:gap-3">
+            @for (bar of chartBars; track $index) {
+              <div
+                class="flex-1 rounded-t-md bg-gradient-to-t from-accent/40 to-accent-secondary/80"
+                [style.height.%]="bar"
+              ></div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

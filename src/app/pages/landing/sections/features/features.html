@@ -1,0 +1,32 @@
+<section id="features" class="border-t border-border">
+  <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
+        Everything your team needs to
+        <span class="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent"
+          >stay ahead</span
+        >
+      </h2>
+      <p class="mt-4 text-muted">
+        Pulsegrid brings every metric into one place, so you can spend less time digging through
+        dashboards and more time making decisions.
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      @for (feature of features; track feature.title) {
+        <div
+          class="rounded-2xl border border-border bg-surface p-6 transition hover:border-accent/40"
+        >
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-accent-secondary text-white"
+          >
+            <app-icon [name]="feature.icon" iconClass="h-5 w-5" />
+          </div>
+          <h3 class="mt-4 text-lg font-semibold">{{ feature.title }}</h3>
+          <p class="mt-2 text-sm text-muted">{{ feature.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

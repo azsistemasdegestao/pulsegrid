@@ -1,0 +1,37 @@
+<footer class="border-t border-border">
+  <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="flex flex-col items-center justify-between gap-6 sm:flex-row">
+      <a
+        routerLink="/"
+        class="flex items-center gap-2 text-lg font-bold tracking-tight text-foreground"
+      >
+        <span
+          class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-accent-secondary text-white"
+        >
+          <app-icon name="activity" iconClass="h-5 w-5" />
+        </span>
+        Pulsegrid
+      </a>
+
+      <nav class="flex flex-wrap items-center justify-center gap-6 text-sm text-muted">
+        <a routerLink="/" fragment="features" class="transition-colors hover:text-foreground"
+          >Features</a
+        >
+        <a routerLink="/" fragment="how-it-works" class="transition-colors hover:text-foreground"
+          >How it works</a
+        >
+        <a routerLink="/" fragment="faq" class="transition-colors hover:text-foreground">FAQ</a>
+        <a routerLink="/privacy-policy" class="transition-colors hover:text-foreground"
+          >Privacy Policy</a
+        >
+      </nav>
+    </div>
+
+    <div class="mt-8 border-t border-border pt-8 text-center text-sm text-muted">
+      <p>&copy; {{ currentYear }} Pulsegrid. All rights reserved.</p>
+      <p class="mt-1 text-xs">
+        Pulsegrid is a fictional product built for portfolio and demo purposes.
+      </p>
+    </div>
+  </div>
+</footer>

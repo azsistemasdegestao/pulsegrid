@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Check formatting
+        run: npx prettier --check .
+
+      - name: Unit tests
+        run: npm test -- --watch=false
+
+      - name: Build
+        run: npm run build
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: pulsegrid
+          POSTGRES_PASSWORD: pulsegrid
+          POSTGRES_DB: pulsegrid
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U pulsegrid"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgres://pulsegrid:pulsegrid@localhost:5432/pulsegrid
+      ADMIN_PASSWORD: test-admin-password
+      SESSION_SECRET: test-session-secret
+      NG_ALLOWED_HOSTS: localhost
+      PORT: 4000
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: Run database migrations
+        run: npm run db:migrate
+
+      - name: Run E2E tests
+        run: |
+          npm run serve:ssr:pulsegrid &
+          SERVER_PID=$!
+
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:4000/ > /dev/null; then
+              echo "Server is up"
+              break
+            fi
+            sleep 1
+          done
+
+          npm run e2e
+          EXIT_CODE=$?
+
+          kill $SERVER_PID
+          exit $EXIT_CODE
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

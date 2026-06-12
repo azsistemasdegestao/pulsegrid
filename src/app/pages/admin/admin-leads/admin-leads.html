@@ -1,0 +1,91 @@
+<div class="min-h-screen">
+  <header class="border-b border-border">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <a
+        routerLink="/"
+        class="flex items-center gap-2 text-lg font-bold tracking-tight text-foreground"
+      >
+        <span
+          class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-accent-secondary text-white"
+        >
+          <app-icon name="activity" iconClass="h-5 w-5" />
+        </span>
+        Pulsegrid Admin
+      </a>
+      <button
+        type="button"
+        (click)="logout()"
+        class="rounded-lg border border-border px-4 py-2 text-sm font-semibold text-foreground transition hover:bg-surface-hover"
+      >
+        Log out
+      </button>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-bold tracking-tight">Demo requests</h1>
+    <p class="mt-1 text-sm text-muted">
+      Submissions from the "Request a Demo" form, most recent first.
+    </p>
+
+    @switch (state()) {
+      @case ('loading') {
+        <div class="mt-10 text-sm text-muted">Loading...</div>
+      }
+      @case ('error') {
+        <div class="mt-10 rounded-xl border border-border bg-surface p-6 text-sm">
+          <p class="text-red-400">Something went wrong while loading demo requests.</p>
+          <button
+            type="button"
+            (click)="fetchLeads()"
+            class="mt-4 rounded-lg border border-border px-4 py-2 text-sm font-semibold transition hover:bg-surface-hover"
+          >
+            Try again
+          </button>
+        </div>
+      }
+      @case ('loaded') {
+        @if (leads().length === 0) {
+          <div
+            class="mt-10 rounded-xl border border-border bg-surface p-6 text-center text-sm text-muted"
+          >
+            No demo requests yet.
+          </div>
+        } @else {
+          <div class="mt-6 overflow-x-auto rounded-xl border border-border">
+            <table class="w-full min-w-[800px] text-left text-sm">
+              <thead class="bg-surface text-xs uppercase text-muted">
+                <tr>
+                  <th class="px-4 py-3 font-medium">Submitted</th>
+                  <th class="px-4 py-3 font-medium">Name</th>
+                  <th class="px-4 py-3 font-medium">Email</th>
+                  <th class="px-4 py-3 font-medium">Company</th>
+                  <th class="px-4 py-3 font-medium">Message</th>
+                  <th class="px-4 py-3 font-medium">IP</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-border">
+                @for (lead of leads(); track lead.id) {
+                  <tr>
+                    <td class="px-4 py-3 whitespace-nowrap text-muted">
+                      {{ lead.createdAt | date: 'medium' }}
+                    </td>
+                    <td class="px-4 py-3 font-medium">{{ lead.name }}</td>
+                    <td class="px-4 py-3">
+                      <a href="mailto:{{ lead.email }}" class="hover:text-accent">{{
+                        lead.email
+                      }}</a>
+                    </td>
+                    <td class="px-4 py-3">{{ lead.company }}</td>
+                    <td class="max-w-xs px-4 py-3 text-muted">{{ lead.message || '—' }}</td>
+                    <td class="px-4 py-3 text-muted">{{ lead.ipAddress || '—' }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      }
+    }
+  </main>
+</div>

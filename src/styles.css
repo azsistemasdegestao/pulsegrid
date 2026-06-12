@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/inter/800.css';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Surfaces */
+  --color-background: oklch(9% 0.015 280);
+  --color-surface: oklch(14% 0.018 280);
+  --color-surface-hover: oklch(18% 0.02 280);
+  --color-border: oklch(24% 0.02 280);
+
+  /* Text */
+  --color-foreground: oklch(96% 0.005 280);
+  --color-muted: oklch(63% 0.02 280);
+
+  /* Brand gradient accents */
+  --color-accent: oklch(63% 0.25 293);
+  --color-accent-secondary: oklch(70% 0.16 230);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}

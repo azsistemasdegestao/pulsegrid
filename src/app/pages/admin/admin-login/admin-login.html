@@ -1,0 +1,48 @@
+<main class="flex min-h-screen items-center justify-center px-4">
+  <div class="w-full max-w-sm">
+    <div class="mb-8 flex flex-col items-center text-center">
+      <span
+        class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-accent to-accent-secondary text-white"
+      >
+        <app-icon name="shield" iconClass="h-6 w-6" />
+      </span>
+      <h1 class="mt-4 text-2xl font-bold tracking-tight">Admin sign in</h1>
+      <p class="mt-2 text-sm text-muted">Enter the admin password to view demo requests.</p>
+    </div>
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      novalidate
+      class="rounded-2xl border border-border bg-surface p-6"
+    >
+      <label for="password" class="block text-sm font-medium">Password</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        autocomplete="current-password"
+        class="mt-1.5 w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm outline-none transition focus:border-accent"
+      />
+      @if (form.controls.password.invalid && form.controls.password.touched) {
+        <p class="mt-1.5 text-xs text-red-400">Password is required.</p>
+      }
+
+      @if (errorMessage()) {
+        <p class="mt-4 text-sm text-red-400">{{ errorMessage() }}</p>
+      }
+
+      <button
+        type="submit"
+        [disabled]="submitting()"
+        class="mt-6 w-full rounded-lg bg-gradient-to-r from-accent to-accent-secondary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-accent/30 transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {{ submitting() ? 'Signing in...' : 'Sign in' }}
+      </button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-muted">
+      <a routerLink="/" class="hover:text-foreground">&larr; Back to Pulsegrid</a>
+    </p>
+  </div>
+</main>
